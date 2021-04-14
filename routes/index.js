@@ -29,6 +29,7 @@ router.get('/manufacturer', function(req, res, next) {
 
 // '/manufacturers_best_bike'
 router.get('/manufacturers_best_bike', function(req, res, next) {
+
   var params = { Key: { "name": req.query.name_str }, TableName: "d_bike_manufacturer" };
   dynamoDB.get(params).promise().then( function(obj) {
     if (Object.keys(obj).length==0) {
@@ -41,6 +42,23 @@ router.get('/manufacturers_best_bike', function(req, res, next) {
     dynamoDB.get(params2).promise().then( function(obj2) {
       res.render('index', { description: 'Consecutive DynamoDB Items', jay_son: obj2 });
     });
+  });
+});
+
+// '/manufacturer_and_bike'
+router.get('/manufacturer_and_bike', function(req, res, next) {
+  
+  // Two query params
+  var params = { Key: { "name": req.query.name_str }, TableName: "d_bike_manufacturer" };
+  var params2 = { Key: { "model_name": req.query.bike_str }, TableName: "d_bike_model" };
+
+  var promises_arr = [
+    dynamoDB.get(params).promise(),
+    dynamoDB.get(params2).promise()
+  ];
+
+  Promise.all(promises_arr).then( function(obj) {
+    res.render('index', { description: 'Promise.all() for Concurrency', jay_son: obj } );
   });
 });
 
