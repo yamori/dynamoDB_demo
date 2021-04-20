@@ -62,4 +62,27 @@ router.get('/manufacturer_and_bike', function(req, res, next) {
   });
 });
 
+// '/manufacturers' (batch get)
+router.get('/manufacturers', function(req, res, next) {
+  var manufTableName = "d_bike_manufacturer";
+  var manufacturers_array = req.query.names_str.split(",");
+  var bikeTableName = "d_bike_model";
+  var bikes_array = req.query.bikes_str.split(",");
+
+  var params = { RequestItems: {} };
+  params.RequestItems[manufTableName] = {Keys: []};
+  for (manufacturer_name of manufacturers_array) {
+    params.RequestItems[manufTableName].Keys.push( { name: manufacturer_name } );
+  }
+  params.RequestItems[bikeTableName] = {Keys: []};
+  for (bike_name of bikes_array) {
+    params.RequestItems[bikeTableName].Keys.push( { model_name: bike_name } );
+  }
+  console.log(JSON.stringify(params,null,2));
+
+  dynamoDB.batchGet(params).promise().then( function(obj) {
+    res.render('index', { description: 'DynamoDB BatchGet', jay_son: obj });
+  });
+});
+
 module.exports = router;
