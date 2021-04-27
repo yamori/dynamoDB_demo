@@ -1,6 +1,8 @@
 # NodejS + DynamoDB + Promises
 
-A demo app demonstrating the three in a stack.
+A demo app demonstrating the NodeJS, Promises, and DynamoDB.  Also detailed in [this blog post](https://matthewkindzerske.com/2021/04/21/nodejs-dynamodb-and-promises/).
+
+## Links for when the app is running
 
 http://localhost:3000/
 
