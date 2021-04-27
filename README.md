@@ -16,9 +16,9 @@ http://localhost:3000/manufacturers?names_str=Fuji,Specialized&bikes_str=Roubaix
 
 ## Requirements
 
--npm, NodeJS
--valid AWS (SDK) credz for DynamoDB `get` and `batchGet`
--two tables in DynamoDB (table names are hard-coded, sorry)
+- npm, NodeJS
+- valid AWS (SDK) credz for DynamoDB `get` and `batchGet`
+- two tables in DynamoDB (table names are hard-coded, sorry)
 
 ## Tables
 
